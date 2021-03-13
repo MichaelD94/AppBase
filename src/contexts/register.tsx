@@ -3,15 +3,22 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as auth from "../services/auth";
 import api from "../services/api";
 
-interface AuthContextData {
-    signed: boolean;
-    loading: boolean;
+interface RegisterProducerData {
+    personType: "physical" | "legal";
     user: object | null;
     signIn(): Promise<void>;
     signOut(): void;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+interface RegisterBuyerData {
+    personType: "physical" | "legal";
+    user: object | null;
+    signIn(): Promise<void>;
+    signOut(): void;
+}
+
+const RegisterProducerContext = createContext<RegisterBuyerData>({} as RegisterBuyerData);
+const RegisterBuyerContext = createContext<RegisterProducerData>({} as RegisterProducerData);
 
 export const AuthProvider: React.FC = ({children}) => {
     const [user, setUser] = useState<object | null>(null)

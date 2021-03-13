@@ -1,24 +1,31 @@
 import React from 'react'
-import { View, Button, StyleSheet } from 'react-native'
-import { useAuth } from "../../contexts/auth";
-
-const styles = StyleSheet.create({
-    container:{flex: 1, justifyContent: 'center'},
-})
+import { useAuth } from "../../contexts/auth"
+import Header from '../../components/Header'
+import {Container} from "./styles"
+import { Text } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Dashboard: React.FC = () => {
-    const { signOut } = useAuth()
+    const { user, signed, signOut } = useAuth()
+    const {name, email} = user
 
+    console.log(signed)
+    console.log(user)
 
-    function handleSignOut() {        
+    function handleSignOut() {
         signOut()
     }
 
     return  (
-        <View style={styles.container}>
-            <Button title='Sign out' onPress={handleSignOut} />
-        </View>
-    )      
+        <Container>
+            <Header />
+            <Text>Bem Vindo {name}</Text>
+            <Text>Email {email}</Text>
+            <TouchableOpacity onPress={handleSignOut}>
+                <Text>Continue</Text>
+            </TouchableOpacity>
+        </Container>
+    )
 }
 
 export default Dashboard;

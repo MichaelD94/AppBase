@@ -1,29 +1,53 @@
 import React, { useState} from 'react'
 import { useAuth } from "../../contexts/auth";
-import { Container, Logo, Label, Form, Input, Button, ButtonText, TouchableText, TextBlue} from './styles'
-import logo from '../../assets/logo.svg'
-
+import
+{
+  Container,
+  Logo,
+  Label,
+  Form,
+  Input,
+  Button,
+  ButtonSignUp,
+  ButtonTextSignIn,
+  ButtonTextSignUp,
+  TouchableText,
+  TextBlue,
+  WelcomeText,
+  ActionText,
+  ActionTextWhite,
+  Footer
+} from './styles'
+import logo from '../../assets/logo.png'
+import { useNavigation } from '@react-navigation/native';
 
 
 const SignIn: React.FC = () => {
     const [email, setEmail] = useState('');
     const [passWord, setPassWord] = useState('');
     const { signed, user, signIn } = useAuth()
+    const navigation = useNavigation()
 
     console.log(signed)
     console.log(user)
 
-    function handleSignin() {        
+    function handleSignIn() {
        signIn()
     }
 
+    function handleSignUp() {
+      navigation.navigate('Contract')
+   }
+
     return  (
-        <Container behavior="padding" >
+      <Container>
         <Logo source={logo} resizeMode='contain' />
+        <WelcomeText>Bem vindo</WelcomeText>
+        <ActionText>Faça login e acesse o mercado leiteiro</ActionText>
         <Form>
-          <Label>Email</Label>
-          <Input            
-            placeholder="Seu e-mail"
+          <Label>Email ou CPF</Label>
+          <Input
+            placeholder="Digite aqui seu e-mail ou CPF"
             placeholderTextColor= "#999"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -33,7 +57,7 @@ const SignIn: React.FC = () => {
           />
 
           <Label>Senha</Label>
-          <Input            
+          <Input
             placeholder="Sua Senha"
             placeholderTextColor= "#999"
             autoCapitalize="none"
@@ -41,12 +65,12 @@ const SignIn: React.FC = () => {
             textContentType="password"
             secureTextEntry
             value={passWord}
-            onChangeText={setPassWord}                                              
+            onChangeText={setPassWord}
           />
 
-          <Button onPress={handleSignin} >
-            <ButtonText >Entrar</ButtonText>
-          </Button>
+        <Button onPress={handleSignIn} >
+          <ButtonTextSignIn >Entrar no Milk Link</ButtonTextSignIn>
+        </Button>
 
         </Form>
         <TouchableText
@@ -54,10 +78,16 @@ const SignIn: React.FC = () => {
           underlayColor={'#fff'}
           onPress={() => (null)}
         >
-          <TextBlue>Esqueci a senha</TextBlue>
-        </TouchableText>       
-      </Container>
-    )      
+          <TextBlue>Esqueci a minha senha</TextBlue>
+        </TouchableText>
+        <Footer>
+          <ActionTextWhite>Ainda Não participa do mercado leiteiro?</ActionTextWhite>
+            <ButtonSignUp onPress={handleSignUp} >
+              <ButtonTextSignUp >Crie já sua conta</ButtonTextSignUp>
+            </ButtonSignUp>
+        </Footer>
+    </Container>
+  )
 }
 
 export default SignIn;
